@@ -1,0 +1,70 @@
+# openspec/config.yaml — SDD configuration for mzllo-boliteros
+schema: spec-driven
+
+context: |
+  Product: Mzllo Boliteros — a LEGAL lottery-results information platform.
+  Publishes official state lottery results (Florida Lottery incl. Miami area,
+  Georgia Lottery, New York Lottery) on a website and via a Telegram bot with
+  AI, on two channels (public and private/premium). Monetization: ads,
+  memberships, affiliates. Only official state lottery results — never the
+  underground bolita game.
+  Stack (decided at proposal): Node.js 24 + TypeScript across web, worker,
+  bot, cards; node:test strict TDD; better-sqlite3, grammY, sharp/resvg-js,
+  zod, node-cron. Environment also supports Python 3.10 + pytest 9.0.3 +
+  httpx + playwright 1.61 (secondary), Rust (cargo 1.92). No Go.
+  Architecture: defined in design phase.
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Legal compliance: content must reference official state lottery sources only
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    guidelines:
+      - Follow existing code patterns
+    tdd: true            # strict TDD: RED-GREEN-REFACTOR enforced
+    test_command: "node --test"
+  verify:
+    test_command: "node --test"
+    build_command: ""
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
+
+testing:
+  strict_tdd: true
+  detected: 2026-08-15
+  test_runner:
+    command: "pytest -q | node --test"
+    framework: "pytest 9.0.3 / node:test (node v24.18.0)"
+  layers:
+    unit:
+      available: true
+      tool: "pytest / node:test"
+    integration:
+      available: true
+      tool: "httpx 0.28.1 (python) / fetch (node)"
+    e2e:
+      available: true
+      tool: "playwright 1.61.0 (python)"
+  coverage:
+    available: false
+    command: ""          # pytest-cov not installed yet
+  quality:
+    linter:
+      available: false
+      command: ""        # no ruff/flake8/eslint on PATH
+    type_checker:
+      available: true
+      command: "tsc 6.0.3"
+    formatter:
+      available: false
+      command: ""        # no black/prettier on PATH
