@@ -128,7 +128,7 @@ export class NyAdapter implements DrawAdapter {
         jackpot: raw.estimated_jackpot ?? null,
         prizeTiers: [],
         sourceRef: `ny-${gameId}-${raw.draw_date}-${drawType}`,
-        sourceUrl: `${NY_API_BASE}/${NY_DATASETS[gameId] ?? datasetId}.json`,
+        sourceUrl: `${NY_API_BASE}/${NY_DATASETS[gameId] ?? gameId}.json`,
       };
     } catch {
       return null;
