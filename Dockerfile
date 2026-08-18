@@ -35,4 +35,4 @@ ENV DB_PATH=/app/data/mzllo.db
 
 EXPOSE 3000
 
-CMD ["node", "--import", "node:sqlite", "src/web/index.ts"]
+CMD ["node", "--import", "node:sqlite", "src/main.ts"]

@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mzllo:
+    build: .
+    container_name: mzllo-boliteros
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "${PORT:-3000}:3000"
+    volumes:
+      - mzllo-data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  mzllo-data:
+    driver: local

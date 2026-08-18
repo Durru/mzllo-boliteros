@@ -11,7 +11,8 @@
     "test": "node --test",
     "test:store": "node --test \"test/store/**/*.test.ts\"",
     "test:config": "node --test \"test/config/**/*.test.ts\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "start": "node --import node:sqlite src/main.ts"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.35",
