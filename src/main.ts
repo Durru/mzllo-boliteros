@@ -5,7 +5,6 @@
  * Run: node --import node:sqlite src/main.ts
  */
 
-import { createServer } from 'node:http';
 import { openDb } from './store/db.ts';
 import { createWebApp } from './web/index.ts';
 import { StateScheduler } from './ingest/scheduler.ts';
@@ -14,6 +13,7 @@ import { GaAdapter } from './ingest/ga.ts';
 import { NyAdapter } from './ingest/ny.ts';
 import type { State } from './store/queries.ts';
 import { upsertDraw } from './store/queries.ts';
+import { serve } from '@hono/node-server';
 import cron from 'node-cron';
 
 // --- Config ---
@@ -33,10 +33,8 @@ const db = openDb({ filename: DB_PATH });
 
 // --- Web server ---
 const app = createWebApp(db);
-const server = createServer(app.fetch);
-
-server.listen(PORT, () => {
-  console.log(`🌐 Web server running on http://localhost:${PORT}`);
+const server = serve({ fetch: app.fetch, port: PORT }, (info) => {
+  console.log(`🌐 Web server running on http://localhost:${info.port}`);
 });
 
 // --- Ingest scheduler ---
